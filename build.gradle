@@ -3,6 +3,7 @@ apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 version = '0.0.1'
+def projectName = 'NoStress'
 
 repositories {
     mavenCentral()
@@ -12,9 +13,17 @@ dependencies {
 	compile 'com.corundumstudio.socketio:netty-socketio:1.7.4'
 }
 
+idea {
+  project {
+    jdkName = '1.8'
+    languageLevel = '1.8'
+    vcs = 'Git'
+  }
+}
+
 jar {
     manifest {
-        attributes 'Implementation-Title': 'No Stress',
+        attributes 'Implementation-Title': projectName,
                    'Implementation-Version': version
     }
 }
