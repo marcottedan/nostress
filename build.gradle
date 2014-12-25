@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+version = '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile 'com.corundumstudio.socketio:netty-socketio:1.7.4'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'No Stress',
+                   'Implementation-Version': version
+    }
+}
