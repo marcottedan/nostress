@@ -1,9 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 
-sourceCompatibility = 1.8
-version = '0.0.1'
 def projectName = 'NoStress'
+version = '0.0.1'
+sourceCompatibility = 1.8
+targetCompatibility = sourceCompatibility
 
 repositories {
     mavenCentral()
@@ -11,12 +12,15 @@ repositories {
 
 dependencies {
 	compile 'com.corundumstudio.socketio:netty-socketio:1.7.4'
+    compile 'ch.qos.logback:logback-classic:1.1.2'
+    compile 'org.javassist:javassist:3.18.2-GA'
+    compile 'org.redisson:redisson:1.1.7'
 }
 
 idea {
   project {
-    jdkName = '1.8'
-    languageLevel = '1.8'
+    jdkName = targetCompatibility
+    languageLevel = targetCompatibility
     vcs = 'Git'
   }
 }
