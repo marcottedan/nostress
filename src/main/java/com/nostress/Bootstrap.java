@@ -3,7 +3,6 @@ package com.nostress;
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.store.RedissonStoreFactory;
-import com.corundumstudio.socketio.store.StoreFactory;
 import org.redisson.Config;
 import org.redisson.Redisson;
 
@@ -19,6 +18,8 @@ public class Bootstrap {
 
         // Instantiate Redisson connection
         Redisson redisson = Redisson.create(redissonConfig);
+
+
 
         // Instantiate RedissonClientStoreFactory
         RedissonStoreFactory redisStoreFactory = new RedissonStoreFactory();
