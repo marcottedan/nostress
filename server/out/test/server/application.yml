@@ -1,0 +1,6 @@
+spring:
+   profiles: unit-test
+doge:
+  wow: 4
+nostress:
+  foo: "babar"

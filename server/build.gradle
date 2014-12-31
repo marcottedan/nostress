@@ -13,6 +13,7 @@ repositories {
 dependencies {
 	compile 'com.corundumstudio.socketio:netty-socketio:1.7.5'
     compile 'ch.qos.logback:logback-classic:1.1.2'
+    compile 'org.logback-extensions:logback-ext-spring:0.1.2'
     compile 'org.javassist:javassist:3.18.2-GA'
     compile 'org.redisson:redisson:1.1.7'
     compile 'org.yaml:snakeyaml:1.14'
