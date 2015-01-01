@@ -1,12 +1,12 @@
 package com.nostress.demo;
 
-import java.io.UnsupportedEncodingException;
-
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
+
+import java.io.UnsupportedEncodingException;
 
 public class BinaryEventLauncher {
 
@@ -14,7 +14,7 @@ public class BinaryEventLauncher {
 
         Configuration config = new Configuration();
         config.setHostname("localhost");
-        config.setPort(9092);
+        config.setPort(8080);
 
         final SocketIOServer server = new SocketIOServer(config);
 

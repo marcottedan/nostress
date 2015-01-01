@@ -29,7 +29,7 @@
 
                 var userName = 'user' + Math.floor((Math.random()*1000)+1);
 
-		var socket =  io.connect('http://localhost:9092');
+		var socket =  io.connect('http://localhost:8080');
 
 		socket.on('connect', function() {
 			output('<span class="connect-msg">Client has connected to the server!</span>');
@@ -73,8 +73,10 @@
                                           userName: userName, 
                                           message: message};
 
-                        socket.emit('ackevent1', jsonObject, function(arg1, arg2) {
-                            alert("ack from server! arg1: " + arg1 + ", arg2: " + arg2);
+                        socket.emit('ackevent1', jsonObject, function(chatObject) {
+							var userName = chatObject.userName;
+							var message = chatObject.message;
+                            alert("ack from server! userName: " + userName + ", message: " + message);
                         });
 		}
 		

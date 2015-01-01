@@ -9,7 +9,7 @@ public class NamespaceChatLauncher {
 
         Configuration config = new Configuration();
         config.setHostname("localhost");
-        config.setPort(9092);
+        config.setPort(8080);
 
         final SocketIOServer server = new SocketIOServer(config);
         final SocketIONamespace chat1namespace = server.addNamespace("/chat1");

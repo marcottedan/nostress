@@ -7,8 +7,12 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.VoidAckCallback;
 import com.corundumstudio.socketio.listener.DataListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AckChatLauncher {
+
+    protected static final Logger Log = LoggerFactory.getLogger(AckChatLauncher.class);
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -19,32 +23,34 @@ public class AckChatLauncher {
         final SocketIOServer server = new SocketIOServer(config);
         server.addEventListener("ackevent1", ChatObject.class, new DataListener<ChatObject>() {
             @Override
-            public void onData(final SocketIOClient client, ChatObject data, final AckRequest ackRequest) {
+            public void onData(final SocketIOClient client, ChatObject chatObject, final AckRequest ackRequest) {
 
-                // check is ack requested by client,
-                // but it's not required check
+                final String userName = chatObject.getUserName();
+                final String chatMessage = chatObject.getMessage();
+
+                // check is ack requested by client, but it's not required check
                 if (ackRequest.isAckRequested()) {
-                    // send ack response with data to client
-                    ackRequest.sendAckData("client message was delivered to server!", "yeah!");
+                    // send ack response with chatObject to client
+                    ChatObject syncChatObject = new ChatObject(userName, "(Sync) Server saw " + chatMessage);
+                    ackRequest.sendAckData(syncChatObject);
                 }
 
-                // send message back to client with ack callback WITH data
-                ChatObject ackChatObjectData = new ChatObject(data.getUserName(), "message with ack data");
+                // send message back to client with ack callback WITH chatObject
+                ChatObject ackChatObject = new ChatObject(userName, "(Ack) Server saw " + chatMessage);
                 client.sendEvent("ackevent2", new AckCallback<String>(String.class) {
                     @Override
                     public void onSuccess(String result) {
-                        System.out.println("ack from client: " + client.getSessionId() + " data: " + result);
+                        Log.info("Ack Callback from client: '{}' with userName '{}' and message '{}' with result '{}'", client.getSessionId(), userName, chatMessage, result);
                     }
-                }, ackChatObjectData);
+                }, ackChatObject);
 
-                ChatObject ackChatObjectData1 = new ChatObject(data.getUserName(), "message with void ack");
+                ChatObject voidAckChatObject = new ChatObject(chatObject.getUserName(), "(VoidAck) Server saw " + chatObject.getMessage());
                 client.sendEvent("ackevent3", new VoidAckCallback() {
-
                     protected void onSuccess() {
-                        System.out.println("void ack from: " + client.getSessionId());
+                        Log.info("VoidAck Callback from client: '{}' with userName '{}' and message '{}'", client.getSessionId(), userName, chatMessage);
                     }
 
-                }, ackChatObjectData1);
+                }, voidAckChatObject);
             }
         });
 

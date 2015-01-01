@@ -21,7 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan
 public class Bootstrap implements CommandLineRunner {
 
-    protected final Logger Log = LoggerFactory.getLogger(getClass());
+    protected final Logger Log = LoggerFactory.getLogger(Bootstrap.class);
 
     @Autowired
     private BeanService beanService;
