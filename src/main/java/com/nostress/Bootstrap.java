@@ -1,7 +1,10 @@
 package com.nostress;
 
+import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.Configuration;
+import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
+import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.store.RedissonStoreFactory;
 import org.redisson.Config;
 import org.redisson.Redisson;
@@ -55,6 +58,14 @@ public class Bootstrap implements CommandLineRunner {
 
         // Instantiate SocketIO Server
         SocketIOServer server = new SocketIOServer(config);
+
+        server.addEventListener("chatevent", ChatObject.class, new DataListener<ChatObject>() {
+            @Override
+            public void onData(SocketIOClient client, ChatObject chatMessage, AckRequest ackRequest) {
+                Log.info("'{}' said '{}'", chatMessage.getUserName(), chatMessage.getMessage());
+                server.getBroadcastOperations().sendEvent("chatevent", chatMessage);
+            }
+        });
 
         // Start the SocketIO Server
         server.start();
